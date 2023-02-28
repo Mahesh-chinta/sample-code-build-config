@@ -68,12 +68,13 @@ steps:
 #   - '--artifact-name=myprogram'
 #   - '--file=./myprogram'
 
+#     gcloud artifacts repositories create test-sample-repository --repository-format="docker" --location=asia-south1 --description="My Artifact Repository"
+
 - name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'sh'
   args:
   - '-c'
   - |
-#     gcloud artifacts repositories create test-sample-repository --repository-format="docker" --location=asia-south1 --description="My Artifact Repository"
     gcloud artifacts docker images import --quiet --verbosity=error --format="none" "gs://binary_storage/myprogram" "test-sample-repository/myprogram:latest"
     gcloud artifacts docker images list --repository=test-sample-repository
 
