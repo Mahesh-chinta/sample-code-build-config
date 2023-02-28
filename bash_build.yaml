@@ -13,7 +13,7 @@
 
 #try 2
 steps:
-- name: 'asia.gcr.io/cloud-builders/go'
+- name: 'gcr.io/cloud-builders/go'
   entrypoint: 'sh'
   args:
   - '-c'
@@ -21,7 +21,7 @@ steps:
     export GOPATH=/workspace/sample-code-build-config
     go build -o myprogram
 # running the build
-- name: 'asia.gcr.io/cloud-builders/go'
+- name: 'gcr.io/cloud-builders/go'
   entrypoint: 'sh'
   args:
   - '-c'
@@ -29,11 +29,11 @@ steps:
     ./myprogram
     
 # store the build
-- name: 'asia.gcr.io/cloud-builders/gsutil'
+- name: 'gcr.io/cloud-builders/gsutil'
   args: ['cp', 'myprogram', 'gs://binary_storage/']
   
 # upload the build
-- name: 'asia.gcr.io/cloud-builders/gcloud'
+- name: 'gcr.io/cloud-builders/gcloud'
   args:
   - 'artifacts'
   - 'generic'
