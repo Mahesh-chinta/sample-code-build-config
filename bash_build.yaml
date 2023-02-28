@@ -1,8 +1,23 @@
+# try 1
+# steps:
+# - name: 'gcr.io/cloud-builders/go'
+#   entrypoint: 'bash'
+#   args:
+#   - '-c'
+#   - |
+#     export GOPATH=/workspace/sample-code-build-config
+#     go build -o myprogram
+# ERROR
+# ERROR: build step 0 "gcr.io/cloud-builders/go" failed: starting step container failed: Error response from daemon: failed to create shim task: OCI runtime create failed: runc create failed: unable to start container process: exec: "bash": executable file not found in $PATH: unknown
+
+
+#try 2
 steps:
 - name: 'gcr.io/cloud-builders/go'
-  entrypoint: 'bash'
+  entrypoint: 'sh'
   args:
   - '-c'
   - |
     export GOPATH=/workspace/sample-code-build-config
     go build -o myprogram
+
