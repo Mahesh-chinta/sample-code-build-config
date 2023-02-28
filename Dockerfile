@@ -1,19 +1,18 @@
-FROM golang:1.10
+# Use the official Go image as the base image
+FROM golang:1.17-alpine3.14
 
-# Set the Current Working Directory inside the container
-WORKDIR $GOPATH/src/github.com/codefresh-contrib/go-sample-app
+# Set the working directory in the container
+WORKDIR /app
 
-# Copy everything from the current directory to the PWD (Present Working Directory) inside the container
-COPY . .
+# Clone the repository to the container
+RUN apk update && apk add --no-cache git
+RUN git clone https://github.com/Mahesh-chinta/sample-code-build-config/edit/main/Dockerfile
 
-# Download all the dependencies
-RUN go get -d -v ./...
+# Build the Go application
+RUN go build -o app
 
-# Install the package
-RUN go install -v ./...
-
-# This container exposes port 8080 to the outside world
+# Expose port 8080 for the application
 EXPOSE 8080
 
-# Run the executable
-CMD ["chinta.reddy COE GO GO "]
+# Start the application when the container starts
+CMD [ "./app" ]
