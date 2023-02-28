@@ -4,5 +4,5 @@ steps:
   args:
   - '-c'
   - |
-    export GOPATH=/workspace/
+    export GOPATH=/workspace/sample-code-build-config
     go build -o myprogram
