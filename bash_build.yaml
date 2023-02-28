@@ -12,6 +12,38 @@
 
 
 #try 2
+# steps:
+# - name: 'gcr.io/cloud-builders/go'
+#   entrypoint: 'sh'
+#   args:
+#   - '-c'
+#   - |
+#     export GOPATH=/workspace/sample-code-build-config
+#     go build -o myprogram
+
+# # store
+# - name: 'gcr.io/cloud-builders/gsutil'
+#   entrypoint: 'sh'
+#   args:
+#   - '-c'
+#   - |
+#     gsutil cp myprogram gs://binary_storage/
+    
+# # upoad
+# - name: 'gcr.io/cloud-builders/gcloud'
+#   entrypoint: 'sh'
+#   args:
+#   - '-c'
+#   - |
+#     gcloud artifacts generic upload \
+#     --project=jio-big-data-poc \
+#     --location=asia-south1 \
+#     --substitutions=_BUCKET=binary_storage \
+#     --artifact-name=myprogram \
+#     --file=./myprogram
+
+
+#####try3
 steps:
 - name: 'gcr.io/cloud-builders/go'
   entrypoint: 'sh'
@@ -20,25 +52,19 @@ steps:
   - |
     export GOPATH=/workspace/sample-code-build-config
     go build -o myprogram
-
-# store
 - name: 'gcr.io/cloud-builders/gsutil'
-  entrypoint: 'sh'
   args:
-  - '-c'
-  - |
-    gsutil cp myprogram gs://binary_storage/
-    
-# upoad
+  - 'cp'
+  - './myprogram'
+  - 'gs://binary_storage/myprogram'
 - name: 'gcr.io/cloud-builders/gcloud'
-  entrypoint: 'sh'
   args:
-  - '-c'
-  - |
-    gcloud artifacts generic upload \
-    --project=jio-big-data-poc \
-    --location=asia-south1 \
-    --substitutions=_BUCKET=binary_storage \
-    --artifact-name=myprogram \
-    --file=./myprogram
+  - 'artifacts'
+  - 'generic'
+  - 'upload'
+  - '--location=asia-south1'
+  - '--project=myproject'
+  - '--substitutions=_BUCKET=binary_storage'
+  - '--artifact-name=myprogram'
+  - '--file=./myprogram'
 
