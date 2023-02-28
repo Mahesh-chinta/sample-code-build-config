@@ -1,0 +1,8 @@
+steps:
+- name: 'gcr.io/cloud-builders/go'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    export GOPATH=/workspace/myproject
+    go build -o myprogram
