@@ -1,4 +1,9 @@
 steps:
-  - name: 'asia.gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'asia-south1-docker.pkg.dev/jio-big-data-poc/hello-repo', '.']
-    id: 'Build  Docker image'
+- name: 'gcr.io/cloud-builders/go'
+  args: ['build', '-o', 'hello']
+  dir: '.'
+  timeout: '10m'
+  
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['app', 'deploy']
+timeout: '10m'
