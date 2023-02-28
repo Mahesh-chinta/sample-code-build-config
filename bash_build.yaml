@@ -27,3 +27,18 @@ steps:
   - '-c'
   - |
     ./myprogram
+    
+# store the build
+- name: 'gcr.io/cloud-builders/gsutil'
+  args: ['cp', 'myprogram', 'gs://binary_storage/']
+  
+# upload the build
+- name: 'gcr.io/cloud-builders/gcloud'
+  args:
+  - 'artifacts'
+  - 'generic'
+  - 'upload'
+  - '--project=<your-project-id>'
+  - '--location=<region>'
+  - '--substitutions=_BUCKET=<binary_storage>'
+  - 'myprogram'
