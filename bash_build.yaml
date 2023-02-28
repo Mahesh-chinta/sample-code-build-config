@@ -38,7 +38,7 @@ steps:
   - 'artifacts'
   - 'generic'
   - 'upload'
-  - '--project=<your-project-id>'
-  - '--location=<region>'
-  - '--substitutions=_BUCKET=<binary_storage>'
+  - '--project=jio-big-data-poc'
+  - '--location=asia-south1
+  - '--substitutions=_BUCKET=binary_storage'
   - 'myprogram'
