@@ -20,4 +20,10 @@ steps:
   - |
     export GOPATH=/workspace/sample-code-build-config
     go build -o myprogram
-
+# running the build
+- name: 'gcr.io/cloud-builders/go'
+  entrypoint: 'sh'
+  args:
+  - '-c'
+  - |
+    ./myprogram
