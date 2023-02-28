@@ -20,25 +20,25 @@ steps:
   - |
     export GOPATH=/workspace/sample-code-build-config
     go build -o myprogram
-# running the build
-- name: 'gcr.io/cloud-builders/go'
+
+# store
+- name: 'gcr.io/cloud-builders/gsutil'
   entrypoint: 'sh'
   args:
   - '-c'
   - |
-    ./myprogram
+    gsutil cp myprogram gs://binary_storage/
     
-# store the build
-- name: 'gcr.io/cloud-builders/gsutil'
-  args: ['cp', 'myprogram', 'gs://binary_storage/']
-  
-# upload the build
+# upoad
 - name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: 'sh'
   args:
-  - 'artifacts'
-  - 'generic'
-  - 'upload'
-  - '--project=jio-big-data-poc'
-  - '--location= asia-south1'
-  - '--substitutions=_BUCKET=binary_storage'
-  - 'myprogram'
+  - '-c'
+  - |
+    gcloud artifacts generic upload \
+    --project=jio-big-data-poc \
+    --location=asia-south1 \
+    --substitutions=_BUCKET=binary_storage \
+    --artifact-name=myprogram \
+    --file=./myprogram
+
