@@ -57,14 +57,23 @@ steps:
   - 'cp'
   - './myprogram'
   - 'gs://binary_storage/myprogram'
+# - name: 'gcr.io/cloud-builders/gcloud'
+#   args:
+#   - 'artifacts'
+#   - 'generic'
+#   - 'upload'
+#   - '--location=asia-south1'
+#   - '--project=myproject'
+#   - '--substitutions=_BUCKET=binary_storage'
+#   - '--artifact-name=myprogram'
+#   - '--file=./myprogram'
+
 - name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: 'sh'
   args:
-  - 'artifacts'
-  - 'generic'
-  - 'upload'
-  - '--location=asia-south1'
-  - '--project=myproject'
-  - '--substitutions=_BUCKET=binary_storage'
-  - '--artifact-name=myprogram'
-  - '--file=./myprogram'
+  - '-c'
+  - |
+#     gcloud artifacts repositories create test-sample-repository --repository-format="docker" --location=asia-south1 --description="My Artifact Repository"
+    gcloud artifacts docker images import --quiet --verbosity=error --format="none" "gs://binary_storage/myprogram" "test-sample-repository/myprogram:latest"
+    gcloud artifacts docker images list --repository=test-sample-repository
 
